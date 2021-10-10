@@ -24,9 +24,6 @@ function browsersync() {
 
 function scripts() {
     return src([
-        // 'node_modules/jquery/dist/jquery.min.js',
-        'src/js/plagins/lazyload.min.js',
-        'src/js/plagins/slick.min.js',
         'src/js/main.js'
     ])
     .pipe(concat('main.min.js'))
@@ -36,7 +33,7 @@ function scripts() {
 }
 
 function styles() {
-    return src('src/scss/main.scss')
+    return src('src/scss/**/*.scss')
     .pipe(sass())
     .pipe(concat('main.min.css'))
     .pipe(prefix({ overrideBrowserslist: ['last 10 versions'], grid: true  }))
@@ -53,7 +50,7 @@ function images() {
 }
 
 function startwatch() {
-    watch(['src/scss/main.scss', '!app/content/themes/gulp-theme/assets/*.min.css'], styles);
+    watch(['src/scss/**/*.scss', '!app/content/themes/gulp-theme/assets/*.min.css'], styles);
     watch(['src/js/*.js', '!app/content/themes/gulp-theme/assets/*.min.js'], scripts);
     watch([imgPath + '**/*'], images);
     watch('app/content/themes/**/*.css').on('change', browserSync.reload);

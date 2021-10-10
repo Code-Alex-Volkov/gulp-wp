@@ -6,7 +6,13 @@ add_filter('show_admin_bar', '__return_false'); // отключить верхн
 function gulp_scripts() {
   wp_enqueue_style( 'gulp-style', get_stylesheet_uri(), '1.1', true );
   wp_enqueue_style( 'gulp-main', get_template_directory_uri() . '/assets/main.min.css', '1.1', true );  
-	wp_deregister_script( 'jquery' );
+  
+  wp_deregister_script( 'jquery' );
+  wp_register_script( 'jquery', get_template_directory_uri() . '/assets/js/jquery.min.js', false, null, true );
+  wp_enqueue_script( 'jquery' );
+  
+  // при подключении slick.min.js будут проблемы с работой слайдеров
+  wp_enqueue_script( 'slick-script', get_template_directory_uri() . '/assets/js/slick.js', array(), '1.1', true ); 
   wp_enqueue_script( 'gulp-script', get_template_directory_uri() . '/assets/main.min.js', array(), '1.1', true );
 }
 // Добавить скрипты и стили на сайт
@@ -19,18 +25,6 @@ function remove_styles () {
 	wp_deregister_style ('wp-block-library');
 }
 add_action ('wp_print_styles','remove_styles',100);
-
-/* Options Page */
-if( function_exists('acf_add_options_page') ) {
-	acf_add_options_page(array(
-	  'page_title' => 'Настройка сайта',
-	  'menu_title' => 'Настройка сайта',
-	  'menu_slug' => 'theme-general-settings',
-	  'capability' => 'edit_posts',
-	  'update_button' => __('Обновить', 'acf'),
-	  'redirect' => false
-	));
-}
 
 
 
